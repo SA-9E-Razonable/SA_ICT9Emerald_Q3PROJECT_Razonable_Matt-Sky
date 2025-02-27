@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Home | Q3 Project</title>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <style>
+		body {
+			background-color: #1a256a;
+		}
+
+		.navbar {
+			border-bottom: 4px solid white;
+		}
+
+		.custom-toggler .navbar-toggler-icon {
+			background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 1)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+		}
+
+		.navbar-toggler:focus, .navbar-toggler:active, .navbar-toggler-icon:focus {
+			box-shadow: 1px 1px #1a256a !important;
+		}
+
+		.nav-link, .nav-btn {
+			font-size: 2.25rem;
+			color: white !important;
+		}
+
+		.nav-input {
+			height: 75%;
+			transform: translateY(20%);
+			font-size: 1.5rem !important;
+		}
+
+		h1 {
+			font-size: 3rem;
+			letter-spacing: 7px;
+			transform: translateX(20%);
+		}
+
+		.form-label {
+			font-size: 1.5rem;
+			color: white;
+		}
+
+		.fare-btn {
+			width: 160px;
+			background-color: white;
+			letter-spacing: 2.5px;
+			color: #1a256a;
+		}
+
+		.fare-btn:hover {
+			background-color: #ccc;
+		}
+
+		#output {
+			width: 70%;
+			padding-top: 7rem;
+			padding-bottom: 7rem;
+			background-color: white;
+			font-size: 2.5rem;
+			color: #1a256a;
+		}
+
+		#beep {
+			position: absolute;
+			margin-top: 15px;
+			margin-left: 7.25px;
+			width: 40%;
+		}
+
+		#map {
+			width: 42%;
+			position: absolute;
+			top: 0;
+			margin-top: 90px;
+			right: 0;
+		}
+
+        @media (max-width: 768px) {
+			body { overflow-x: hidden; }
+			.nav-link, .nav-btn { font-size: 2rem; }
+			.nav-input { font-size: 1.25rem; }
+
+			h1 {
+				transform: translateX(10%);
+			}
+
+			#output {
+				transform: translateX(25%);
+			}
+
+			#beep {
+				width: 74%;
+			}
+
+			#map {
+				width: 100%; 
+    			max-width: 400px;
+				margin-top: -20px;
+				transform: translate(-12%, 200%);
+			}
+		}
+	</style>
+</head>
+<body>
+    <div class="navbar navbar-expand-lg">
+		<button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar"> 
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav">
+				<li class="nav-item mx-5">
+					<a href="page1.html" class="nav-link fw-bold">Home</a>
+				</li>
+				<li class="nav-item mx-5">
+					<a href="page2.html" class="nav-link fw-bold">Train Schedule</a>
+				</li>
+				<li class="nav-item mx-5">
+					<a href="page3.html" class="nav-link fw-bold">Help</a>
+				</li>
+			</ul>
+			<div class="navbar-nav ms-auto">
+				<form class="d-flex">
+					<input type="text" class="form-control nav-input ms-lg-0 ms-3">
+					<button class="btn nav-btn mx-3 text-light fw-bold" type="button">Search</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid animate__animated animate__bounceInUp animate__slow">
+		<div class="row">
+			<div class="col-lg-6 me-3 ms-5 left">
+				<h1 class="mt-4 text-light fw-bold">Fare Guide</h1>
+
+				<div class="row">
+					<div class="col-lg-6 col-10">
+
+						<label for="from" class="form-label fw-bold">Leaving from</label>
+						<select class="form-select rounded-0" id="from" onchange="fareClear()">
+                            <option value="none"></option>
+                            <option value="R">Recto</option>
+                            <option value="L">Legarda</option>
+                            <option value="P">Pureza</option>
+                            <option value="V">V. Mapa</option>
+                            <option value="J">J. Ruiz</option>
+                            <option value="G">Gilmore</option>
+                            <option value="B">Betty Go</option>
+                            <option value="C">Cubao</option>
+                            <option value="As">Anonas</option>
+                            <option value="K">Katipunan</option>
+                            <option value="S">Santolan</option>
+                            <option value="M">Marikina</option>
+                            <option value="Ao">Antipolo</option>
+                        </select>
+
+						<br>
+
+						<label for="to" class="form-label fw-bold">Going to</label>
+						<select class="form-select rounded-0" id="to" onchange="fareClear()">
+                            <option value="none"></option>
+                            <option value="R">Recto</option>
+                            <option value="L">Legarda</option>
+                            <option value="P">Pureza</option>
+                            <option value="V">V. Mapa</option>
+                            <option value="J">J. Ruiz</option>
+                            <option value="G">Gilmore</option>
+                            <option value="B">Betty Go</option>
+                            <option value="C">Cubao</option>
+                            <option value="As">Anonas</option>
+                            <option value="K">Katipunan</option>
+                            <option value="S">Santolan</option>
+                            <option value="M">Marikina</option>
+                            <option value="Ao">Antipolo</option>
+                        </select>
+
+						<button class="btn fare-btn mt-4 me-1 rounded-0" onclick="fareDisplay('regular')">Regular <br> Fare</button>
+						<button class="btn fare-btn mt-4 ms-1 rounded-0" onclick="fareDisplay('discount')">Discounted  <br>Fare</button>
+					</div>
+					<div class="col-lg-6 col-10 mt-lg-0 mt-5">
+						<p id="output" class="rounded-5 text-center fw-bold"></p>
+					</div>
+				</div>
+				<img src="beep.png" id="beep">
+			</div>
+			<div class="col-lg-6 right">
+				<img src="map.png" id="map">
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function fareDisplay(type) {
+			var origin = document.getElementById('from').value;
+			var destination = document.getElementById('to').value;
+			var fare = 0;
+
+			if (origin === "none" || destination === "none") {
+				window.alert("Please pick an origin or destination to continue.");
+				return;
+			}
+
+			if (origin === destination) {
+				window.alert("Please pick two different stops to continue.");
+				return;
+			}
+
+			if ((origin === "R" && (destination === "L")) || (origin === "L" && (destination === "R"))) fare = 15;
+
+			if ((origin === "R" && (destination === "P" || destination === "V" || destination === "J")) || 
+				((origin === "P" || origin === "V" || origin === "J")) && destination === "R") fare = 20;
+
+			if ((origin === "R" && (destination === "G" || destination === "B" || destination === "C" || destination === "As")) || 
+				((origin === "G" || origin === "B" || origin === "C" || origin === "As") && destination === "R")) fare = 25;
+
+			if ((origin === "R" && (destination === "K" || destination === "S")) || 
+				((origin === "K" || origin === "S") && destination === "R")) fare = 30;
+
+			if ((origin === "R" && (destination === "M" || destination === "Ao")) || 
+				((origin === "M" || origin === "Ao") && destination === "R")) fare = 35;
+
+			if ((origin === "L" && (destination === "P" || destination === "V" || destination === "J")) || 
+				((origin === "P" || origin === "V" || origin === "J") && destination === "L")) fare = 20;
+
+			if ((origin === "L" && (destination === "G" || destination === "B" || destination === "C" || destination === "As")) || 
+				((origin === "G" || origin === "B" || origin === "C" || origin === "As") && destination === "L")) fare = 25;
+
+			if ((origin === "L" && (destination === "K" || destination === "S")) || 
+				((origin === "K" || origin === "S") && destination === "L")) fare = 30;
+
+			if ((origin === "L" && (destination === "M" || destination === "Ao")) || 
+				((origin === "M" || origin === "Ao") && destination === "L")) fare = 35;
+
+			if ((origin === "P" && (destination === "V" || destination === "J")) || 
+				((origin === "V" || origin === "J") && destination === "P")) fare = 15;
+
+			if ((origin === "P" && (destination === "G" || destination === "B" || destination === "C" || destination === "As")) || 
+				((origin === "G" || origin === "B" || origin === "C" || origin === "As") && destination === "P")) fare = 20;
+
+			if ((origin === "P" && (destination === "K" || destination === "S")) || 
+				((origin === "K" || origin === "S") && destination === "P")) fare = 25;
+
+			if ((origin === "P" && (destination === "M" || destination === "Ao")) || 
+				((origin === "M" || origin === "Ao") && destination === "P")) fare = 30;
+
+			if ((origin === "V" && (destination === "J" || destination === "G" || destination === "B" || destination === "C" || destination === "As")) || 
+				((origin === "J" || origin === "G" || origin === "B" || origin === "C" || origin === "As") && destination === "V")) fare = 20;
+
+			if ((origin === "V" && (destination === "K" || destination === "S")) || 
+				((origin === "K" || origin === "S") && destination === "V")) fare = 25;
+
+			if ((origin === "V" && (destination === "M" || destination === "Ao")) || 
+				((origin === "M" || origin === "Ao") && destination === "V")) fare = 30;
+
+			if ((origin === "J" && (destination === "G" || destination === "B" || destination === "C" || destination === "As")) || 
+				((origin === "G" || origin === "B" || origin === "C" || origin === "As") && destination === "J")) fare = 20;
+
+			if ((origin === "J" && (destination === "K" || destination === "S")) || 
+				((origin === "K" || origin === "S") && destination === "J")) fare = 25;
+
+			if ((origin === "J" && (destination === "M" || destination === "Ao")) || 
+				((origin === "M" || origin === "Ao") && destination === "J")) fare = 30;
+
+			if ((origin === "G" && (destination === "B" || destination === "C" || destination === "As")) || 
+				((origin === "B" || origin === "C" || origin === "As") && destination === "G")) fare = 15;
+
+			if ((origin === "G" && (destination === "K" || destination === "S")) || 
+				((origin === "K" || origin === "S") && destination === "G")) fare = 20;
+
+			if ((origin === "G" && (destination === "M" || destination === "Ao")) || 
+				((origin === "M" || origin === "Ao") && destination === "G")) fare = 25;
+
+			if ((origin === "B" && (destination === "C" || destination === "As")) || 
+				((origin === "C" || origin === "As") && destination === "B")) fare = 15;
+
+			if ((origin === "B" && (destination === "K" || destination === "S")) || 
+				((origin === "K" || origin === "S") && destination === "B")) fare = 20;
+
+			if ((origin === "B" && (destination === "M" || destination === "Ao")) || 
+				((origin === "M" || origin === "Ao") && destination === "B")) fare = 25;
+
+			if ((origin === "C" && (destination === "As")) || 
+				((origin === "As") && destination === "C")) fare = 15;
+
+			if ((origin === "C" && (destination === "K" || destination === "S")) || 
+				((origin === "K" || origin === "S") && destination === "C")) fare = 20;
+
+			if ((origin === "C" && (destination === "M" || destination === "Ao")) || 
+				((origin === "M" || origin === "Ao") && destination === "C")) fare = 25;
+
+			if ((origin === "As" && (destination === "K" || destination === "S")) || 
+				((origin === "K" || origin === "S") && destination === "As")) fare = 15;
+
+			if ((origin === "As" && (destination === "M" || destination === "Ao")) || 
+				((origin === "M" || origin === "Ao") && destination === "As")) fare = 20;
+
+			if ((origin === "K" && (destination === "S")) || 
+				((origin === "S") && destination === "K")) fare = 15;
+
+			if ((origin === "K" && (destination === "M" || destination === "Ao")) || 
+				((origin === "M" || origin === "Ao") && destination === "K")) fare = 20;
+
+			if ((origin === "S" && (destination === "M" || destination === "Ao")) || 
+				((origin === "M" || origin === "Ao") && destination === "S")) fare = 15;
+
+			if (origin === "M" && destination === "Ao" || origin === "Ao" && destination === "M") 
+				fare = 15;
+
+			if (type === "regular") {
+				document.getElementById('output').innerHTML = "Php " + fare;
+			} else {
+				fare = fare * 0.8;
+				document.getElementById('output').innerHTML = "Php " + fare;
+			}
+		}
+
+		function fareClear() {
+			document.getElementById('output').innerHTML = "";
+		}
+	</script>
+</body>
+</html>
